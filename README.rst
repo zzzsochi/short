@@ -36,6 +36,6 @@ API
 **GET /short_url**
 
 :response:
-    :status: 302
+    :status: 301
     :headers:
         :Location: Original URL
