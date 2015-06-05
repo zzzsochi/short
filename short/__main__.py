@@ -21,7 +21,8 @@ def serve(args):
     loop = asyncio.get_event_loop()
 
     log.info("start configuring application")
-    app = configure(loop=loop, redis=(args.redis_host, args.redis_port))
+    redis_info = (args.redis_host, args.redis_port, args.redis_db)
+    app = configure(loop=loop, redis=redis_info)
 
     log.info("start listening socket ({}:{})".format(args.host, args.port))
     handler = app.make_handler()
@@ -75,6 +76,11 @@ def main():
         type=int,
         default=6379,
         help='Redis port (default: 6379)')
+    parser_serve.add_argument(
+        '--redis-db',
+        type=int,
+        default=0,
+        help='Redis db number (default: 0)')
 
     args = parser.parse_args()
 

@@ -18,11 +18,11 @@ def includeme(app):
 
 
 @asyncio.coroutine
-def setup_redis(app, host='localhost', port=6379):
-    log.info('connecting to redis ({}:{})'.format(host, port))
+def setup_redis(app, host='localhost', port=6379, db=0):
+    log.info('connecting to redis ({}:{}/{})'.format(host, port, db))
 
     app['redis'] = yield from aioredis.create_pool(
-        (host, port),
+        (host, port), db=db,
         minsize=5, maxsize=10,
         loop=app.loop)
 
